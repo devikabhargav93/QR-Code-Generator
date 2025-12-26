@@ -31,21 +31,30 @@ def generate_qr(data, size=900):
         (88, 81, 219),    # violet-blue
     ]
 
-    for i in range(size):
-        t = i / size
+    # Diagonal gradient
+    for i in range(size * 2):
+        t = i / (size * 2)
         c1 = colors[int(t * (len(colors) - 1))]
         c2 = colors[min(int(t * (len(colors) - 1)) + 1, len(colors) - 1)]
         ratio = (t * (len(colors) - 1)) % 1
         r = int(c1[0] + (c2[0] - c1[0]) * ratio)
         g = int(c1[1] + (c2[1] - c1[1]) * ratio)
         b = int(c1[2] + (c2[2] - c1[2]) * ratio)
-        draw.line([(0, i), (size, i)], fill=(r, g, b, 255))
+        draw.line([(i, 0), (0, i)], fill=(r, g, b, 255))
 
-    # Apply gradient only on dark modules
+    # Apply gradient to all modules with different intensity
     for y in range(size):
         for x in range(size):
+            r, g, b, a = gradient.getpixel((x, y))
             if qr_img.getpixel((x, y))[0] < 128:
-                qr_img.putpixel((x, y), gradient.getpixel((x, y)))
+                # Dark modules: full gradient color
+                qr_img.putpixel((x, y), (r, g, b, 255))
+            else:
+                # Light modules: very faint version of the gradient (aesthetic background)
+                bg_r = int(r + (255 - r) * 0.94)
+                bg_g = int(g + (255 - g) * 0.94)
+                bg_b = int(b + (255 - b) * 0.94)
+                qr_img.putpixel((x, y), (bg_r, bg_g, bg_b, 255))
 
     return qr_img
 
