@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator | Minimal & Aesthetic</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>QR Generator</h1>
+        <p>Instantly transform any link or text into a beautiful, ready-to-use QR code.</p>
+        
+        <form method="POST">
+            <div class="form-group">
+                <input type="text" name="link" placeholder="Paste your link here..." required value="{{ link if link else '' }}" autocomplete="off">
+            </div>
+            <button type="submit">Generate Code</button>
+        </form>
+
+        {% if qr_base64 %}
+        <div class="result">
+            <div class="qr-wrapper">
+                <img src="data:image/png;base64,{{ qr_base64 }}" alt="QR Code">
+            </div>
+            <br>
+            <a href="{{ url_for('download', link=link) }}" class="download-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                Download PNG
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
