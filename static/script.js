@@ -44,23 +44,28 @@ document.addEventListener('DOMContentLoaded', () => {
             const ctx = finalCanvas.getContext('2d');
 
             // Create Diagonal Gradient
+            /*
             const gradient = ctx.createLinearGradient(0, 0, size, size);
             gradient.addColorStop(0, '#ffc837'); // yellow-orange
             gradient.addColorStop(0.33, '#ff306c'); // pink-magenta
             gradient.addColorStop(0.66, '#833ab4'); // purple
             gradient.addColorStop(1, '#5851db'); // violet-blue
+            */
 
             const qrCtx = qrCanvas.getContext('2d');
             const imgData = qrCtx.getImageData(0, 0, size, size);
             const pixels = imgData.data;
 
             // Draw Background Gradient (Subtle)
+            /*
             ctx.fillStyle = gradient;
             ctx.globalAlpha = 0.06; // Very faint background
             ctx.fillRect(0, 0, size, size);
             ctx.globalAlpha = 1.0;
+            */
 
             // Apply logic: Dark pixels get gradient, light pixels stay faint
+            /*
             const tempCanvas = document.createElement('canvas');
             tempCanvas.width = size;
             tempCanvas.height = size;
@@ -90,6 +95,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             ctx.putImageData(resultImgData, 0, 0);
+            */
+
+            // Draw original black and white QR code
+            ctx.drawImage(qrCanvas, 0, 0);
 
             // Display final result
             finalCanvas.style.maxWidth = '100%';
