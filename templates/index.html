@@ -7,8 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="static/style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
@@ -21,8 +20,8 @@
         <button id="generate-btn">Generate Code</button>
 
         <div id="result-section" class="result" style="display: none;">
-            <div class="qr-wrapper" id="qrcode-container">
-                <!-- Canvas will be injected here -->
+            <div class="qr-wrapper">
+                <img id="qr-image" src="" alt="QR Code" style="max-width: 100%; height: auto; border-radius: 0.5rem;">
             </div>
             <br>
             <a id="download-btn" href="#" class="download-btn" download="qrcode.png">
@@ -34,6 +33,6 @@
         </div>
     </div>
 
-    <script src="static/script.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
